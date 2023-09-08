@@ -1,1 +1,11 @@
 GET http://localhost:3000/notes
+
+###
+
+POST http://localhost:3000/notes
+Content-Type: application/json
+
+{
+    "title": "Node Js",
+    "content": "Learning all about Node JS"
+}
