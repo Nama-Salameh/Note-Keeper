@@ -12,7 +12,7 @@ router.get("/", async (req, res) => {
 });
 
 router.get("/:id", getNote, (req, res) => {
-    res.json(res.note);
+  res.json(res.note);
 });
 
 router.post("/", async (req, res) => {
@@ -25,6 +25,15 @@ router.post("/", async (req, res) => {
     res.status(201).json(newNote);
   } catch (error) {
     res.status(400).json({ message: error.message });
+  }
+});
+
+router.delete("/:id", getNote, async (req, res) => {
+  try {
+    await res.note.deleteOne();
+    res.json({message: "Deleted note Successfully"});
+  } catch (error) {
+    res.status(500).json({message : error.message});
   }
 });
 

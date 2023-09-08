@@ -9,6 +9,9 @@ POST http://localhost:3000/notes
 Content-Type: application/json
 
 {
-    "title": "Node Js",
-    "content": "Learning all about Node JS"
+    "title": "React",
+    "content": "Learning all about React"
 }
+
+###
+DELETE  http://localhost:3000/notes/64fada526d7ed0ef44e38680
