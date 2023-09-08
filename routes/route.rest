@@ -15,3 +15,11 @@ Content-Type: application/json
 
 ###
 DELETE  http://localhost:3000/notes/64fada526d7ed0ef44e38680
+
+###
+PATCH http://localhost:3000/notes/64fad1c7d43b2c3710395945
+Content-Type: application/json
+
+{
+    "title" : "Node.JS"
+}

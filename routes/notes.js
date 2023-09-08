@@ -28,12 +28,23 @@ router.post("/", async (req, res) => {
   }
 });
 
+router.patch("/:id", getNote, async (req, res) => {
+  if (req.body.title != null) res.note.title = req.body.title;
+  if (req.body.content != null) res.note.content = req.body.content;
+  try {
+    const updatedNote = await res.note.save();
+    res.json(updatedNote);
+  } catch (error) {
+    res.status(400).json({message : error.message});
+  }
+});
+
 router.delete("/:id", getNote, async (req, res) => {
   try {
     await res.note.deleteOne();
-    res.json({message: "Deleted note Successfully"});
+    res.json({ message: "Deleted note Successfully" });
   } catch (error) {
-    res.status(500).json({message : error.message});
+    res.status(500).json({ message: error.message });
   }
 });
 
