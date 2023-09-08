@@ -28,7 +28,21 @@ router.get("/search", async (req, res) => {
 
     res.json(searchResults);
   } catch (error) {
-    res.status(400).json({ message: error.message });
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.get("/paginate", async (req, res) => {
+  try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+
+    const notes = await Note.find().skip(skip).limit(limit);
+
+    res.json(notes);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
   }
 });
 

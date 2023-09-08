@@ -23,6 +23,13 @@ Content-Type: application/json
 {
     "title" : "Node.JS"
 }
+
 ###
-//GET http://localhost:3000/notes?title=ReactGET 
 GET http://localhost:3000/notes/search?query=React
+
+###
+GET http://localhost:3000/notes/paginate?page=1&limit=2
+
+###
+GET http://localhost:3000/notes/paginate?page=2&limit=2
+
