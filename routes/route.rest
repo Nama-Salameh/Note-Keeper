@@ -23,3 +23,6 @@ Content-Type: application/json
 {
     "title" : "Node.JS"
 }
+###
+//GET http://localhost:3000/notes?title=ReactGET 
+GET http://localhost:3000/notes/search?query=React

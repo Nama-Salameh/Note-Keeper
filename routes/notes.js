@@ -11,6 +11,27 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.get("/search", async (req, res) => {
+  try {
+    const query = req.query.query.toLowerCase();
+
+    const notes = await Note.find();
+
+    const searchResults = notes.filter(
+      (note) =>
+        note.title.toLowerCase().includes(query) ||
+        note.content.toLowerCase().includes(query)
+    );
+
+    if (searchResults == null)
+      return res.status(404).json({ message: "No Note matches" });
+
+    res.json(searchResults);
+  } catch (error) {
+    res.status(400).json({ message: error.message });
+  }
+});
+
 router.get("/:id", getNote, (req, res) => {
   res.json(res.note);
 });
@@ -35,7 +56,7 @@ router.patch("/:id", getNote, async (req, res) => {
     const updatedNote = await res.note.save();
     res.json(updatedNote);
   } catch (error) {
-    res.status(400).json({message : error.message});
+    res.status(400).json({ message: error.message });
   }
 });
 
