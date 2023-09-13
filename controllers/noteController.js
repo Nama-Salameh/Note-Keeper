@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router();
-const Note = require("../models/note");
+const Note = require("../models/Note");
 
-router.get("/", async (req, res) => {
+async function getAllNotes(req, res) {
   try {
     const notes = await Note.find();
     res.json(notes);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+}
 
-router.get("/search", async (req, res) => {
+async function searchNotes(req, res) {
   try {
     const query = req.query.query.toLowerCase();
 
@@ -30,9 +30,9 @@ router.get("/search", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+}
 
-router.get("/paginate", async (req, res) => {
+async function pagination(req, res) {
   try {
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
@@ -44,13 +44,9 @@ router.get("/paginate", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+}
 
-router.get("/:id", getNote, (req, res) => {
-  res.json(res.note);
-});
-
-router.post("/", async (req, res) => {
+async function createNote(req, res) {
   const note = new Note({
     title: req.body.title,
     content: req.body.content,
@@ -61,9 +57,12 @@ router.post("/", async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-});
+}
+function getNoteById(req, res) {
+  res.json(res.note);
+}
 
-router.patch("/:id", getNote, async (req, res) => {
+async function updateNoteById(req, res) {
   if (req.body.title != null) res.note.title = req.body.title;
   if (req.body.content != null) res.note.content = req.body.content;
   try {
@@ -72,9 +71,9 @@ router.patch("/:id", getNote, async (req, res) => {
   } catch (error) {
     res.status(400).json({ message: error.message });
   }
-});
+}
 
-router.delete("/", async (req, res) => {
+async function deleteAllNotes(req, res) {
   try {
     await Note.deleteMany({});
 
@@ -82,16 +81,16 @@ router.delete("/", async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+}
 
-router.delete("/:id", getNote, async (req, res) => {
+async function deleteNoteById(req, res) {
   try {
     await res.note.deleteOne();
     res.json({ message: "Deleted note Successfully" });
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
-});
+}
 
 async function getNote(req, res, next) {
   let note;
@@ -105,5 +104,14 @@ async function getNote(req, res, next) {
   res.note = note;
   next();
 }
-
-module.exports = router;
+module.exports = {
+  getAllNotes,
+  searchNotes,
+  pagination,
+  createNote,
+  getNoteById,
+  deleteAllNotes,
+  deleteNoteById,
+  updateNoteById,
+  getNote,
+};

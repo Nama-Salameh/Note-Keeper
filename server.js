@@ -12,7 +12,7 @@ const db = mongoose.connection;
 db.on("error", (error) => console.log(error));
 db.on("open", (error) => console.log("connected to Database"));
 
-const notesRouter = require('./routes/notes');
+const notesRouter = require('./routes/noteRoutes');
 app.use('/notes' , notesRouter);
 
 const port = process.env.PORT || 3000;
